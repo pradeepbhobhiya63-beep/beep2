@@ -433,6 +433,9 @@ document.getElementById('otpSubmit').addEventListener('click', async function(){
     otpBoxes[0].focus();
   } catch(x) { otpMsg.style.color='#d64545'; otpMsg.textContent = 'Network error'; }
 });
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
 </script>
 </body>
 </html>
