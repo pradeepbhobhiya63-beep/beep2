@@ -1,0 +1,10 @@
+{
+  "name": "max-pay",
+  "version": "1.0.0",
+  "main": "api/server.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "node-telegram-bot-api": "^0.61.0"
+  }
+}

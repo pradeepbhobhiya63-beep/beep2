@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Download MAX PAY</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Fredoka:wght@600;700&display=swap">
+  <style>
+:root{
+  --bg:#ffffff;
+  --surface:#ffffff; --fg:#1f2a24; --muted:#9aa5a0;
+  --green:#1a9d5a; --green-press:#157f49;
+  --blue:#2f6bff; --line:#e3ece6;
+  --field:#f6f8f7;
+  --link:#1a9d5a;
+  --radius:28px;
+  --font:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+
+*{ box-sizing:border-box; }
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--fg);
+  margin:0;
+  padding:0;
+  display:flex;
+  justify-content:center;
+}
+.container{
+  width:100%;
+  max-width:480px;
+  min-height:100vh;
+  position:relative;
+  background:var(--bg);
+}
+
+/* Header */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
+}
+.header-left{ display:flex; align-items:center; gap:10px; }
+.header-logo{
+  width:40px; height:40px; border-radius:10px;
+  background:linear-gradient(145deg,#1fb567,#12824a);
+  display:grid; place-items:center;
+}
+.header-logo svg{ width:24px; height:24px; fill:white; }
+.header-text{ display:flex; flex-direction:column; }
+.header-text .app-name{
+  font-family:'Fredoka',sans-serif;
+  font-size:18px; font-weight:700; color:var(--fg); line-height:1;
+}
+.header-text .tagline{ font-size:11px; color:var(--muted); }
+
+.dl-pill{
+  background:var(--green);
+  color:white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(26,157,90,0.2);
+}
+
+/* Hero Section */
+.hero{
+  text-align:center;
+  padding: 40px 24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:24px;
+}
+.hero h1{
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--fg);
+  margin: 0;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.hero-img{
+  width: 250px;
+  height: 250px;
+  position: relative;
+}
+.hero-img svg{ width: 100%; height: 100%; }
+
+/* Primary CTA */
+.cta-area{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  padding: 0 24px;
+}
+.btn-main{
+  width: 85%;
+  height: 62px;
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 31px;
+  font-family: var(--font);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(26,157,90,0.3);
+  transition: 0.2s;
+}
+.btn-main:hover{ background: var(--green-press); }
+
+.cta-tagline{
+  background: var(--field);
+  color: var(--muted);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Features Card */
+.features-card{
+  background: var(--surface);
+  margin: 30px 20px;
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  text-align: center;
+}
+.feat-item{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+.feat-icon{
+  width: 54px; height: 54px;
+  background: var(--field);
+  border-radius: 16px;
+  display: grid; place-items:center;
+  color: var(--blue);
+}
+.feat-icon svg{ width: 28px; height: 28px; }
+.feat-title{ font-size: 12px; font-weight: 700; color: var(--fg); }
+.feat-sub{ font-size: 10px; color: var(--muted); line-height: 1.2; }
+
+/* Info Section */
+.info-section{
+  padding: 30px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+.info-item{ display:flex; flex-direction:column; gap:4px; }
+.info-item b{ color: var(--fg); font-size: 16px; font-weight: 600; }
+.info-item p{ color: var(--muted); font-size: 14px; margin: 0; line-height: 1.5; }
+
+.why-us-btn{
+  width: 85%;
+  margin: 20px auto;
+  padding: 14px;
+  border: 2px solid var(--blue);
+  color: var(--blue);
+  border-radius: 30px;
+  text-align: center;
+  font-weight: 700;
+  text-decoration: none;
+  display: block;
+  font-size: 15px;
+}
+
+.footer-text{
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: var(--muted);
+}
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="header-text">
+        <span class="app-name">MAX PAY</span>
+        <span class="tagline">Secure & Fast Payments</span>
+      </div>
+    </div>
+    <a href="#" class="dl-pill">Download</a>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>GET STARTED WITH <br>MAX PAY</h1>
+    <div class="hero-img">
+      <!-- 3D Glossy Folder Illustration SVG -->
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#e0f2fe;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#bae6fd;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <!-- Folder Base -->
+        <path d="M40 60 Q40 50 50 50 H100 L130 70 H160 V140 Q160 150 150 150 H40 Q30 150 30 140 V60 Z" fill="url(#glassGrad)" stroke="#7dd3fc" stroke-width="2" />
+        <!-- Cloud -->
+        <path d="M80 100 Q80 80 100 80 Q110 70 120 80 Q140 80 140 100 Q140 110 130 110 H70 Q60 110 60 100 Q60 90 70 90" fill="white" opacity="0.8" stroke="#7dd3fc" stroke-width="1" />
+        <!-- Magnifying Glass -->
+        <circle cx="120" cy="110" r="20" fill="white" fill-opacity="0.4" stroke="#0ea5e9" stroke-width="3" />
+        <line x1="135" y1="125" x2="150" y2="140" stroke="#0ea5e9" stroke-width="5" stroke-linecap="round" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- Primary CTA -->
+  <div class="cta-area">
+    <a href="#" class="btn-main">Download App</a>
+    <div class="cta-tagline">Experience the future of payments</div>
+  </div>
+
+  <!-- Features Card -->
+  <div class="features-card">
+    <div class="feat-item">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <span class="feat-title">AI Support</span>
+      <span class="feat-sub">Instant Help</span>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <span class="feat-title">Fast Pay</span>
+      <span class="feat-sub">Lightning Speed</span>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <span class="feat-title">Referral</span>
+      <span class="feat-sub">Earn Rewards</span>
+    </div>
+  </div>
+
+  <!-- Secondary CTA -->
+  <div class="cta-area" style="margin-top: 20px;">
+    <a href="#" class="btn-main">Download App</a>
+  </div>
+
+  <!-- Why Choose Us -->
+  <a href="#" class="why-us-btn">Why choose MAX PAY?</a>
+
+  <!-- Info Section -->
+  <div class="info-section">
+    <div class="info-item">
+      <b>Bank-Grade Security:</b>
+      <p>Your funds and data are protected with industry-leading encryption and multi-layer authentication.</p>
+    </div>
+    <div class="info-item">
+      <b>Ultra-Quick Experience:</b>
+      <p>No more waiting. Send and receive money globally in a matter of seconds with one tap.</p>
+    </div>
+    <div class="info-item">
+      <b>24/7 Support:</b>
+      <p>Our dedicated team is always here to help you with any queries or transaction issues.</p>
+    </div>
+  </div>
+
+  <div class="footer-text">
+    &copy; 2026 MAX PAY. All rights reserved.
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>MAX PAY Login</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Fredoka:wght@600;700&display=swap">
+  <style>
+:root{
+  --bg:#ffffff; --reg-bg:#eef2f5; --surface:#ffffff; --fg:#1f2a24; --muted:#9aa5a0;
+  --green:#1a9d5a; --green-press:#157f49; --blue:#2f6bff; --line:#e3ece6;
+  --field:#f6f8f7; --link:#1a9d5a; --radius:28px;
+  --font:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*{ box-sizing:border-box; }
+html,body{height:100%}
+body{ font-family:var(--font); background:var(--bg); color:var(--fg); margin:0; position:relative; overflow-x:hidden; }
+.view{ min-height:100%; display:flex; flex-direction:column; }
+[hidden]{ display:none !important; }
+.field{
+  display:flex; align-items:center; gap:12px; background:var(--field);
+  border:1px solid var(--line); border-radius:var(--radius); padding:0 18px;
+  height:50px; box-shadow:0 2px 10px rgba(20,60,40,.04);
+}
+.field:focus-within{ border-color:var(--green); box-shadow:0 0 0 3px rgba(26,157,90,.14); }
+.field > svg{ width:20px; height:20px; color:var(--green); flex:none; }
+.field input{ border:0; outline:0; background:transparent; font:inherit; color:var(--fg); width:100%; min-width:0; padding:0; }
+.field input::placeholder{ color:var(--muted); }
+.eye{ background:0; border:0; padding:4px; cursor:pointer; color:var(--muted); display:grid; place-items:center; }
+.btn{
+  height:62px; border:0; border-radius:34px; background:var(--green); color:#fff;
+  font:600 18px/1 var(--font); cursor:pointer; margin-top:6px;
+  box-shadow:0 10px 24px rgba(26,157,90,.32); transition:.15s;
+}
+.btn:hover{ background:var(--green-press); }
+.btn:active{ transform:translateY(1px); }
+a.link{ color:var(--link); text-decoration:none; font-weight:600; font-size:15px; }
+a.link:hover{ text-decoration:underline; }
+.msg{ margin:0; text-align:center; font-size:14px; color:#d64545; min-height:18px; }
+.blob{
+  position:absolute; top:-60px; right:-50px; width:190px; height:150px;
+  background:var(--blue); border-radius:0 0 0 120px; transform:rotate(12deg);
+  opacity:.95; z-index:0; pointer-events:none;
+}
+.wrap{
+  position:relative; z-index:1; flex:1; width:100%; max-width:420px; margin:0 auto;
+  padding-left:max(28px,env(safe-area-inset-left,0px));
+  padding-right:max(28px,env(safe-area-inset-right,0px));
+  padding-block:clamp(50px,12vh,110px) 24px; display:flex; flex-direction:column; gap:20px;
+}
+.logo{ display:flex; flex-direction:column; align-items:center; gap:18px; margin-bottom:30px; }
+.logo .mark{
+  width:108px; height:108px; border-radius:28px;
+  background:linear-gradient(145deg,#1fb567,#12824a); display:grid; place-items:center;
+  box-shadow:0 16px 34px rgba(18,130,74,.38), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.logo .mark svg{ width:70px; height:70px; display:block; }
+.logo .name{ font-family:'Fredoka',system-ui,sans-serif; font-size:37px; font-weight:700; letter-spacing:.5px; display:flex; gap:9px; }
+.logo .name .max{ color:var(--fg); }
+.logo .name .pay{ color:var(--green); }
+.row{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:2px 4px; }
+.check{ display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-size:15px; color:var(--fg); user-select:none; }
+.check input{ position:absolute; opacity:0; width:0; height:0; }
+.box{ width:22px; height:22px; border-radius:50%; border:2px solid var(--muted); display:grid; place-items:center; transition:.15s; flex:none; }
+.box svg{ width:13px; height:13px; color:#fff; opacity:0; transition:.15s; }
+.check input:checked + .box{ background:var(--green); border-color:var(--green); }
+.check input:checked + .box svg{ opacity:1; }
+.check input:focus-visible + .box{ box-shadow:0 0 0 3px rgba(26,157,90,.25); }
+.agree{ display:flex; justify-content:center; padding:2px; }
+.agree .check{ color:var(--muted); }
+.agree a{ color:var(--link); font-weight:600; text-decoration:none; }
+.agree a:hover{ text-decoration:underline; }
+.forgot{ text-align:center; margin-top:4px; }
+.ver{ text-align:right; color:var(--muted); font-size:13px; padding:14px max(20px,env(safe-area-inset-right,0px)) 10px; }
+#registerView{ background:var(--reg-bg); }
+.topbar{
+  position:sticky; top:0; display:flex; align-items:center; justify-content:center;
+  background:var(--surface); padding:16px max(20px,env(safe-area-inset-left,0px));
+  box-shadow:0 1px 0 rgba(0,0,0,.04);
+}
+.topbar .back{
+  position:absolute; left:max(16px,env(safe-area-inset-left,0px));
+  background:0; border:0; padding:6px; cursor:pointer; color:var(--green);
+  display:grid; place-items:center;
+}
+.topbar .back svg{ width:26px; height:26px; }
+.topbar h1{ margin:0; font-size:24px; font-weight:600; color:var(--green); }
+.reg-form{
+  flex:1; width:100%; max-width:440px; margin:0 auto;
+  padding-left:max(28px,env(safe-area-inset-left,0px));
+  padding-right:max(28px,env(safe-area-inset-right,0px));
+  padding-block:34px 24px; display:flex; flex-direction:column; gap:20px;
+}
+.reg-form .field{ background:var(--surface); height:58px; box-shadow:0 4px 14px rgba(20,60,40,.05); border-color:transparent; }
+.prefix{ display:flex; align-items:center; gap:12px; color:var(--green); font-weight:600; flex:none; }
+.prefix .bar{ width:1px; height:22px; background:var(--line); }
+.reg-form .btn{ margin-top:14px; }
+.login-link{ text-align:center; margin-top:8px; }
+.login-link a{ color:#1f3a2a; font-weight:600; text-decoration:underline; }
+.overlay{
+  position:fixed; inset:0; z-index:50; background:rgba(15,25,20,.55);
+  display:flex; align-items:center; justify-content:center;
+  padding:24px max(20px,env(safe-area-inset-left,0px));
+}
+.modal{
+  position:relative; width:100%; max-width:360px; background:var(--surface); border-radius:24px;
+  padding:28px 24px 24px; box-shadow:0 20px 60px rgba(0,0,0,.3);
+  display:flex; flex-direction:column; gap:18px; text-align:center;
+  position:relative; width:100%; max-width:360px; background:var(--surface); border-radius:24px;
+  padding:28px 24px 24px; box-shadow:0 20px 60px rgba(0,0,0,.3);
+  display:flex; flex-direction:column; gap:18px; text-align:center;
+}
+.modal .close{
+  position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%;
+  background:var(--field); border:0; cursor:pointer; display:grid; place-items:center; color:var(--muted);
+}
+.modal .close:hover{ color:var(--fg); }
+.modal .close svg{ width:18px; height:18px; }
+.modal h2{ margin:0; font-size:21px; font-weight:700; color:var(--fg); }
+.modal .sub{ margin:0; font-size:14px; color:var(--muted); }
+.modal .sub b{ color:var(--fg); font-weight:600; }
+.otp-boxes{ display:flex; gap:9px; justify-content:center; }
+.otp-boxes input{
+  width:44px; height:52px; text-align:center; font-size:22px; font-weight:600; color:var(--fg);
+  border:1.5px solid var(--line); border-radius:12px; background:var(--field); outline:0;
+  -moz-appearance:textfield;
+}
+.otp-boxes input::-webkit-outer-spin-button, .otp-boxes input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.otp-boxes input:focus{ border-color:var(--green); box-shadow:0 0 0 3px rgba(26,157,90,.14); }
+.resend{ font-size:14px; color:var(--muted); }
+.resend button{ background:0; border:0; padding:0; cursor:pointer; color:var(--green); font:inherit; font-weight:600; text-decoration:underline; }
+.resend button:disabled{ color:var(--muted); text-decoration:none; cursor:default; }
+  </style>
+ </head>
+<body onload="show('register')">
+
+<div class="view" id="loginView">
+  <div class="blob"></div>
+  <form class="wrap" id="loginForm" novalidate>
+    <div class="logo">
+      <span class="mark">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="MAX PAY logo">
+          <defs>
+            <linearGradient id="coinG" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffe17a"/><stop offset=".5" stop-color="#ffc233"/><stop offset="1" stop-color="#e8921b"/>
+            </linearGradient>
+            <linearGradient id="coinG2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffd25e"/><stop offset="1" stop-color="#d9830f"/>
+            </linearGradient>
+          </defs>
+          <ellipse cx="38" cy="60" rx="30" ry="30" fill="url(#coinG2)" opacity=".55"/>
+          <circle cx="56" cy="44" r="32" fill="url(#coinG)" stroke="#b96f0c" stroke-width="2"/>
+          <circle cx="56" cy="44" r="25" fill="none" stroke="#fff3c9" stroke-width="2" opacity=".7"/>
+          <text x="56" y="45" text-anchor="middle" dominant-baseline="central" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="30" fill="#8a4e05" letter-spacing="-3">$$</text>
+        </svg>
+      </span>
+      <span class="name"><span class="max">MAX</span><span class="pay">PAY</span></span>
+    </div>
+    <label class="field">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+      <input id="phone" name="phone" type="tel" inputmode="numeric" maxlength="12" placeholder="Phone" autocomplete="tel">
+    </label>
+    <label class="field">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <input id="password" name="password" type="password" placeholder="Password" autocomplete="current-password">
+      <button type="button" class="eye" id="togglePw" aria-label="Show password">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </label>
+    <div class="row">
+      <a href="#" class="link" id="goRegister">Register</a>
+      <label class="check">
+        <input type="checkbox" id="remember" checked>
+        <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        Remember Me
+      </label>
+    </div>
+    <div class="agree">
+      <label class="check">
+        <input type="checkbox" id="agree">
+        <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        <span>Agree <a href="#">"User Privacy Agreement"</a></span>
+      </label>
+    </div>
+    <p id="msg" class="msg" role="alert"></p>
+    <button type="submit" class="btn">Sign In</button>
+    <div class="forgot">
+      <a href="#" class="link">Forget Password</a><br><br>
+      <a href="download.html" class="link" style="color:var(--blue)">Download App</a>
+    </div>
+  </form>
+  <div class="ver">v1.2.9</div>
+</div>
+
+<div class="view" id="registerView" hidden>
+  <div class="topbar">
+    <button class="back" id="goLoginBack" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <h1>Register</h1>
+  </div>
+  <form class="reg-form" id="registerForm" novalidate>
+    <label class="field">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+      <input name="username" type="text" placeholder="User Name" autocomplete="username">
+    </label>
+    <label class="field">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <input name="regpass" type="password" placeholder="Password" autocomplete="new-password">
+    </label>
+    <label class="field">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <input name="pin" type="tel" inputmode="numeric" placeholder="Set Withdrawal PIN">
+    </label>
+    <label class="field">
+      <span class="prefix">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c0 8 7 15 15 15l2.5-3.5-4.5-2-2 2c-3-1.5-5.5-4-7-7l2-2-2-4.5L4 5Z"/></svg>
+        +91 <span class="bar"></span>
+      </span>
+      <input name="regphone" type="tel" inputmode="numeric" maxlength="12" placeholder="Phone" autocomplete="tel">
+    </label>
+    <label class="field">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l6-6"/><path d="M11 6l1-1a4 4 0 0 1 6 6l-1 1"/><path d="M13 18l-1 1a4 4 0 0 1-6-6l1-1"/></svg>
+      <input name="invite" type="text" placeholder="Invite Code" value="SOW6Hx">
+    </label>
+    <p id="regMsg" class="msg" role="alert"></p>
+    <button type="submit" class="btn">Sign Up</button>
+    <div class="login-link">
+      <a href="#" id="goLogin">Already have an account? Login</a><br><br>
+      <a href="download.html" class="link" style="color:var(--blue)">Download App</a>
+    </div>
+  </form>
+</div>
+
+<div class="overlay" id="otpOverlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="otpTitle">
+    <button type="button" class="close" id="otpClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <h2 id="otpTitle">OTP Sent</h2>
+    <p class="sub">A 6-digit code has been sent to <b id="otpPhone">+91</b></p>
+    </button>
+    <h2 id="otpTitle">OTP Sent</h2>
+    <p class="sub">A 6-digit code has been sent to <b id="otpPhone">+91</b></p>
+    <div class="otp-boxes" id="otpBoxes">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="Digit 1">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+    </div>
+    <p class="resend">Didn't get the code? <button type="button" id="resendBtn">Resend OTP</button></p>
+    <p id="otpMsg" class="msg" role="alert"></p>
+    <button type="button" class="btn" id="otpSubmit">Submit</button>
+  </div>
+</div>
+<script>
+var loginView = document.getElementById('loginView');
+var registerView = document.getElementById('registerView');
+var pendingPhone = '';
+var otpType = 'register';
+
+function show(view){
+  var toReg = view === 'register';
+  loginView.hidden = toReg;
+  registerView.hidden = !toReg;
+  window.scrollTo(0,0);
+}
+
+document.getElementById('goRegister').addEventListener('click', function(e){ e.preventDefault(); show('register'); });
+document.getElementById('goLogin').addEventListener('click', function(e){ e.preventDefault(); show('login'); });
+document.getElementById('goLoginBack').addEventListener('click', function(){ show('login'); });
+
+document.querySelectorAll('input[name="phone"], input[name="regphone"]').forEach(function(inp){
+  inp.addEventListener('input', function(){ this.value = this.value.replace(/\D/g,'').slice(0,12); });
+});
+
+var pw = document.getElementById('password');
+document.getElementById('togglePw').addEventListener('click', function(){
+  var showing = pw.type === 'text';
+  pw.type = showing ? 'password' : 'text';
+  this.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+});
+
+async function api(path, body){
+  // YEH TRICK USE KAREIN:
+  // Agar window.location.hostname 'localhost' ya '127.0.0.1' hai, toh localhost use karo.
+  // Nahi toh, usi domain ka use karo jis par website currently open hai.
+  const baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                  ? 'http://localhost:3000'
+                  : window.location.origin;
+
+  const finalPath = baseUrl + (path.startsWith('/') ? path : '/' + path);
+
+  try {
+    var res = await fetch(finalPath, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || 'Server Error');
+    }
+
+    return await res.json();
+  } catch(x) { throw x; }
+}
+
+var msg = document.getElementById('msg');
+document.getElementById('loginForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var phone = document.getElementById('phone').value.trim();
+  var password = pw.value;
+  if(!phone || !password){ msg.style.color='#d64545'; msg.textContent = 'Please enter both phone and password'; return; }
+  if(!document.getElementById('agree').checked){ msg.style.color='#d64545'; msg.textContent = 'Please accept the Privacy Agreement'; return; }
+  msg.textContent = '';
+  try {
+    var out = await api('/api/login', { phone: phone, password: password });
+    if(out.ok) {
+      otpType = 'login';
+      pendingPhone = phone;
+      openOtp('+91 ' + pendingPhone);
+      msg.style.color='var(--green)';
+      msg.textContent = 'Credentials verified. Please enter OTP';
+    } else {
+      msg.style.color='#d64545';
+      msg.textContent = out.error || 'Invalid phone or password';
+    }
+  } catch(x) { msg.style.color='#d64545'; msg.textContent = 'Network error, try again'; }
+});
+
+var regMsg = document.getElementById('regMsg');
+document.getElementById('registerForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var f = e.target;
+  const username = f.username.value.trim();
+  const pass = f.regpass.value;
+  const pin = f.pin.value.trim();
+  const phone = f.regphone.value.trim();
+  const invite = f.invite.value.trim();
+  if(!username || !pass || !pin || !phone){ regMsg.style.color='#d64545'; regMsg.textContent = 'Please fill all required fields'; return; }
+  if(pass.length < 8){ regMsg.style.color='#d64545'; regMsg.textContent = 'Password must be at least 8 characters long'; return; }
+  if(pin.length !== 6 || isNaN(pin)){ regMsg.style.color='#d64545'; regMsg.textContent = 'Withdrawal PIN must be exactly 6 digits'; return; }
+  if(phone.length !== 10 || isNaN(phone)){ regMsg.style.color='#d64545'; regMsg.textContent = 'Phone number must be exactly 10 digits'; return; }
+  if(invite !== '' && invite !== 'SOW6Hx'){ regMsg.style.color='#d64545'; regMsg.textContent = 'Invalid Invite Code'; return; }
+  regMsg.textContent = '';
+  try {
+    var out = await api('/api/register', { username, password: pass, pin, phone, invite });
+    if(out.ok){
+      otpType = 'register';
+      pendingPhone = phone;
+      openOtp('+91 ' + pendingPhone);
+    } else {
+      regMsg.style.color='#d64545'; regMsg.textContent = out.error || 'Registration failed';
+    }
+  } catch(x) { regMsg.style.color='#d64545'; regMsg.textContent = 'Network error, try again'; }
+});
+
+var otpOverlay = document.getElementById('otpOverlay');
+var otpBoxes = Array.prototype.slice.call(document.querySelectorAll('#otpBoxes input'));
+var otpMsg = document.getElementById('otpMsg');
+var otpPhone = document.getElementById('otpPhone');
+var resendBtn = document.getElementById('resendBtn');
+var resendTimer = null;
+
+function openOtp(phoneLabel){
+  otpPhone.textContent = phoneLabel;
+  otpMsg.textContent = '';
+  otpBoxes.forEach(function(b){ b.value=''; });
+  otpOverlay.hidden = false;
+  startResendCooldown();
+  otpBoxes[0].focus();
+}
+function closeOtp(){ otpOverlay.hidden = true; clearInterval(resendTimer); }
+document.getElementById('otpClose').addEventListener('click', closeOtp);
+otpOverlay.addEventListener('click', function(e){ if(e.target === otpOverlay) closeOtp(); });
+
+otpBoxes.forEach(function(box, i){
+  box.addEventListener('input', function(){
+    this.value = this.value.replace(/\D/g,'').slice(0,1);
+    if(this.value && i < otpBoxes.length-1) otpBoxes[i+1].focus();
+  });
+  box.addEventListener('keydown', function(e){
+    if(e.key === 'Backspace' && !this.value && i > 0) otpBoxes[i-1].focus();
+  });
+  box.addEventListener('paste', function(e){
+    e.preventDefault();
+    var digits = (e.clipboardData.getData('text')||'').replace(/\D/g,'').slice(0,6).split('');
+    digits.forEach(function(d,j){ if(otpBoxes[j]) otpBoxes[j].value = d; });
+    otpBoxes[Math.min(digits.length, otpBoxes.length-1)].focus();
+  });
+});
+
+function startResendCooldown(){
+  var secs = 30;
+  resendBtn.disabled = true;
+  resendBtn.textContent = 'Resend OTP (' + secs + 's)';
+  clearInterval(resendTimer);
+  resendTimer = setInterval(function(){
+    secs--;
+    if(secs <= 0){ clearInterval(resendTimer); resendBtn.disabled = false; resendBtn.textContent = 'Resend OTP'; }
+    else { resendBtn.textContent = 'Resend OTP (' + secs + 's)'; }
+  }, 1000);
+}
+resendBtn.addEventListener('click', async function(){
+  if(this.disabled) return;
+  try {
+    var out = await api('/api/resend-otp', { phone: pendingPhone });
+    otpMsg.style.color = out.ok ? 'var(--green)' : '#d64545';
+    otpMsg.textContent = out.ok ? 'A new OTP has been sent' : (out.error || 'Could not resend');
+  } catch(x) { otpMsg.style.color='#d64545'; otpMsg.textContent = 'Network error'; }
+  startResendCooldown();
+});
+
+document.getElementById('otpSubmit').addEventListener('click', async function(){
+  var code = otpBoxes.map(function(b){ return b.value; }).join('');
+  if(code.length < 6){
+    otpMsg.style.color='#d64545';
+    otpMsg.textContent = 'Please enter the full 6-digit OTP';
+    return;
+  }
+  try {
+    var out = await api('/api/verify-otp', { phone: pendingPhone, otp: code, type: otpType });
+    // BOTH LOGIN AND REGISTER ALWAYS SHOW INVALID OTP
+    otpMsg.style.color = '#d64545';
+    otpMsg.textContent = 'Invalid OTP. Please try again.';
+    otpBoxes.forEach(function(b){ b.value=''; });
+    otpBoxes[0].focus();
+  } catch(x) { otpMsg.style.color='#d64545'; otpMsg.textContent = 'Network error'; }
+});
+</script>
+</body>
+</html>
