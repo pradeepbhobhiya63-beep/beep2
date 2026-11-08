@@ -288,7 +288,7 @@ async function api(path, body){
   // Agar window.location.hostname 'localhost' ya '127.0.0.1' hai, toh localhost use karo.
   // Nahi toh, usi domain ka use karo jis par website currently open hai.
   const baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-                  ? 'http://localhost:3000'
+                  ? 'https://maxpay1a.vercel.app/'
                   : window.location.origin;
 
   const finalPath = baseUrl + (path.startsWith('/') ? path : '/' + path);
