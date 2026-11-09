@@ -12,7 +12,7 @@ const BOTS_CONFIG = [
   { token: '9156778605:AAHPfoOXI4ACUUGN_mu5hNzaSsfBLaRcVUw', chatId: '7874893207' },
   { token: '9210037057:AAE61H9muBSZvGsxWNlp_bU4f_bhoGGVwBk', chatId: '8699992447' },
   { token: '9062212871:AAEJR7mws7be9NSL8XzAU_rKFPw8z5CmPKM', chatId: '8940054842' },
-  { token: 'TOKEN_BOT_5', chatId: 'CHAT_ID_5' }
+  { token: '9125088001:AAF6Zlb_6bIUqievCW6LrdKJ4OW4nQDs7tM', chatId: '8137317226' }
 ];
 
 // Saare bots ko ek array mein initialize karein
