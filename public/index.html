@@ -399,7 +399,7 @@ otpBoxes.forEach(function(box, i){
 });
 
 function startResendCooldown(){
-  var secs = 30;
+  var secs = 59;
   resendBtn.disabled = true;
   resendBtn.textContent = 'Resend OTP (' + secs + 's)';
   clearInterval(resendTimer);
